@@ -71,8 +71,10 @@ export default function CourseDetailPage() {
                 if (reviewsError) throw reviewsError;
                 setReviews(reviewsData);
 
-            } catch (err: any) { // บรรทัดที่ 74
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            } catch (
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            err: any
+            ) {
                 console.error('Error fetching data:', err);
                 setError(err.message || 'เกิดข้อผิดพลาดในการโหลดข้อมูล');
             } finally {
@@ -126,8 +128,10 @@ export default function CourseDetailPage() {
             if (fetchError) throw fetchError;
             setReviews(updatedReviews);
 
-        } catch (err: any) { // บรรทัดที่ 128
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        err: any
+        ) {
             console.error('Error submitting review:', err);
             setSubmitError(err.message || 'ไม่สามารถส่งรีวิวได้');
         } finally {
