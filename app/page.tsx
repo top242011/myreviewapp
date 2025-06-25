@@ -2,9 +2,14 @@ import { supabase } from '@/utils/supabaseClient'; // Import Supabase client
 import Link from 'next/link'; // Import Link component for navigation
 import Head from 'next/head'; // Import Head component for SEO metadata
 
+// Forces this page to be rendered dynamically on the server for every request.
+// This ensures that data from Supabase is always fresh and not cached statically.
+export const dynamic = 'force-dynamic';
+
 // Main component for the Home page
 export default async function HomePage() {
   // Fetch courses from Supabase, filtering only approved ones
+  // Since 'dynamic = 'force-dynamic'' is set, this data fetch will happen on every request.
   const { data: courses, error } = await supabase
     .from('courses')
     .select('*')
