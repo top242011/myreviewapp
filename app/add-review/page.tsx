@@ -4,7 +4,7 @@
 import { supabase } from '@/utils/supabaseClient';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Head from 'next/head';
+// Removed: import Head from 'next/head'; // This import is no longer needed in App Router pages
 
 interface Course {
   id: string;
@@ -167,10 +167,7 @@ export default function AddReviewPage() {
 
   return (
     <div className="min-h-screen"> {/* Removed bg-gray-100 */}
-      <Head>
-        <title>เพิ่มรีวิวรายวิชา - เว็บรีวิวรายวิชา</title>
-        <meta name="description" content="เพิ่มรีวิวสำหรับรายวิชาที่มีอยู่ หรือเสนอรายวิชาใหม่พร้อมรีวิว" />
-      </Head>
+      {/* No <Head> component here. Metadata is handled by layout.tsx's export const metadata */}
 
       {/* Header section */}
       <header className="bg-white bg-opacity-10 backdrop-blur-sm shadow-glass-card p-4 flex items-center rounded-b-xl mb-8"> {/* Applied glass-element principles, rounded bottom */}
@@ -323,7 +320,7 @@ export default function AddReviewPage() {
                 ].map((item, index) => (
                   <div key={index} className="flex flex-col">
                     <label className="block text-gray-100 text-base font-bold mb-2"> {/* Light text */}
-                      {item.label}: <span className="font-normal text-glass-accent-light ml-1 star-rating">{renderStars(item.value)}</span> {/* Accent color, star-rating class */}
+                      {item.label}: <span className="font-normal text-glass-accent-light ml-1 star-rating">{renderStars(item.value)}</span>
                     </label>
                     <input
                       type="range"
@@ -331,7 +328,7 @@ export default function AddReviewPage() {
                       max="5"
                       value={item.value}
                       onChange={(e) => item.setter(parseInt(e.target.value))}
-                      className="w-full h-2 bg-blue-400 rounded-lg appearance-none cursor-pointer accent-glass-accent-light" // Accent color slider
+                      className="w-full h-2 bg-blue-400 rounded-lg appearance-none cursor-pointer accent-glass-accent-light"
                     />
                   </div>
                 ))}
@@ -341,7 +338,7 @@ export default function AddReviewPage() {
                 <label className="flex items-center cursor-pointer text-gray-100"> {/* Light text */}
                   <input
                     type="checkbox"
-                    className="form-checkbox h-5 w-5 text-glass-primary-light rounded-md border-gray-400 focus:ring-glass-accent-light transition-all duration-200" // Accent color for checkbox
+                    className="form-checkbox h-5 w-5 text-glass-primary-light rounded-md border-gray-400 focus:ring-glass-accent-light transition-all duration-200"
                     checked={isAnonymous}
                     onChange={(e) => setIsAnonymous(e.target.checked)}
                   />
@@ -350,19 +347,19 @@ export default function AddReviewPage() {
               </div>
 
               {submitSuccess && (
-                <div className="bg-green-600 bg-opacity-70 border border-green-400 text-white px-4 py-3 rounded relative mb-4 shadow-md" role="alert"> {/* Improved success message style */}
+                <div className="bg-green-600 bg-opacity-70 border border-green-400 text-white px-4 py-3 rounded relative mb-4 shadow-md" role="alert">
                   <span className="block sm:inline">ส่งรีวิวสำเร็จแล้ว! ขอบคุณสำหรับความคิดเห็นของคุณ</span>
                 </div>
               )}
               {submitError && (
-                <div className="bg-red-600 bg-opacity-70 border border-red-400 text-white px-4 py-3 rounded relative mb-4 shadow-md" role="alert"> {/* Improved error message style */}
+                <div className="bg-red-600 bg-opacity-70 border border-red-400 text-white px-4 py-3 rounded relative mb-4 shadow-md" role="alert">
                   <span className="block sm:inline">Error: {submitError}</span>
                 </div>
               )}
 
               <button
                 type="submit"
-                className="btn-gradient w-full text-lg disabled:opacity-50 disabled:cursor-not-allowed" // Used btn-gradient
+                className="btn-gradient w-full text-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? 'กำลังส่งรีวิว...' : 'ส่งรีวิวของคุณ'}
