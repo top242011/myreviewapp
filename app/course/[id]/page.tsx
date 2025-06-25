@@ -148,6 +148,8 @@ export default function CourseDetailPage() {
   };
 
   // Loading, Error, and Not Found states
+  // These return statements must be wrapped in a single JSX element if they were not already.
+  // The structure here is correct, each conditional return is a full JSX element.
   if (loading) return (
     <div className="min-h-screen flex items-center justify-center">
       <p className="text-xl text-gray-200">กำลังโหลดข้อมูล...</p>
@@ -174,8 +176,6 @@ export default function CourseDetailPage() {
 
   return (
     <div className="min-h-screen">
-      {/* No <Head> component here. Metadata is handled by layout.tsx's export const metadata */}
-
       {/* Header section */}
       <header className="bg-white bg-opacity-10 backdrop-blur-sm shadow-glass-card p-4 flex items-center rounded-b-xl mb-8">
         <Link href="/" className="text-glass-accent-light hover:text-glass-primary-light text-lg font-semibold mr-4 transition-colors duration-200">
