@@ -1,6 +1,5 @@
 import { supabase } from '@/utils/supabaseClient';
 import Link from 'next/link';
-import Head from 'next/head'; // Added for SEO metadata
 
 // Forces this page to be rendered dynamically on the server for every request.
 // This ensures that data from Supabase is always fresh and not cached statically.
@@ -26,10 +25,6 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen"> {/* Removed bg-gray-100 as body handles background */}
-      <Head>
-        <title>เว็บรีวิวรายวิชา - ค้นหาและรีวิวคอร์สเรียน</title>
-        <meta name="description" content="ค้นหารายวิชา, อ่านรีวิว, และเขียนรีวิวสำหรับคอร์สเรียนในมหาวิทยาลัยต่างๆ" />
-      </Head>
 
       {/* Header section with site title and "Add Review" button */}
       <header className="bg-white bg-opacity-10 backdrop-blur-sm shadow-glass-card p-4 text-center relative rounded-b-xl mb-8"> {/* Applied glass-element principles, rounded bottom */}

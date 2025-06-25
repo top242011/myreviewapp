@@ -4,7 +4,6 @@ import { supabase } from '@/utils/supabaseClient';
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import Head from 'next/head'; // Added for SEO metadata
 
 interface Course {
     id: string;
@@ -175,10 +174,6 @@ export default function CourseDetailPage() {
 
     return (
         <div className="min-h-screen"> {/* Removed bg-gray-100 */}
-            <Head>
-                <title>{course.course_name} ({course.course_code}) - เว็บรีวิวรายวิชา</title>
-                <meta name="description" content={`รีวิววิชา ${course.course_name} (${course.course_code}) ของ ${course.university_name}`} />
-            </Head>
 
             {/* Header section */}
             <header className="bg-white bg-opacity-10 backdrop-blur-sm shadow-glass-card p-4 flex items-center rounded-b-xl mb-8"> {/* Applied glass-element principles, rounded bottom */}
