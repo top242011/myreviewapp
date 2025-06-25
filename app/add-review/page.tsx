@@ -108,7 +108,7 @@ export default function AddReviewPage() {
             course_name: newCourseName,
             faculty: newFaculty || null, // Use null if faculty is empty
             credits: newCredits ? parseInt(newCredits) : null, // Convert credits to integer, use null if empty
-            is_approved: true, // ***** NEW: New courses are automatically approved *****
+            is_approved: true, // NEW: New courses are automatically approved
           })
           .select('id') // Select only the ID of the newly inserted course
           .single(); // Expect a single result
@@ -152,8 +152,11 @@ export default function AddReviewPage() {
       setRatingHomework(3);
       setIsAnonymous(true);
 
-    } catch (err: any) {
+    } catch (
+      // Corrected ESLint disable position for 'any' type error
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      err: any
+    ) {
       console.error('Error submitting review:', err);
       setSubmitError(err.message || 'ไม่สามารถส่งรีวิวได้'); // Display error message
     } finally {
@@ -324,7 +327,7 @@ export default function AddReviewPage() {
                 ].map((item, index) => (
                   <div key={index} className="flex flex-col">
                     <label className="block text-gray-700 text-base font-bold mb-2">
-                      {item.label}: <span className="font-normal text-blue-600 ml-1">{item.value} ดาว</span>
+                      {item.label}: <span className="font-normal text-blue-600 ml-1">{renderStars(item.value)}</span> {/* CORRECTED: Calling renderStars */}
                     </label>
                     <input
                       type="range"
