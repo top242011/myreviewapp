@@ -1,12 +1,13 @@
 // postcss.config.mjs
 // This file uses ES Module syntax (import/export)
+// Following the error message: "you'll need to install `@tailwindcss/postcss` and update your PostCSS configuration."
 
 const config = {
   plugins: {
-    // These plugins are essential for Tailwind CSS to work correctly
-    // 'tailwindcss' is the plugin that processes @tailwind directives and Tailwind classes
-    tailwindcss: {},
-    // 'autoprefixer' adds vendor prefixes (e.g., -webkit-, -moz-) for browser compatibility
+    // Reverting to use @tailwindcss/postcss as suggested by the error message.
+    // This plugin typically handles the integration of Tailwind CSS within PostCSS.
+    "@tailwindcss/postcss": {},
+    // autoprefixer is still necessary for adding vendor prefixes
     autoprefixer: {},
   },
 };
