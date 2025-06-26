@@ -1,5 +1,6 @@
 import { supabase } from '@/utils/supabaseClient';
 import Link from 'next/link';
+// Removed: import Head from 'next/head'; // This import is no longer needed in App Router pages
 
 // Forces this page to be rendered dynamically on the server for every request.
 // This ensures that data from Supabase is always fresh and not cached statically.
@@ -25,6 +26,7 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen"> {/* Removed bg-gray-100 as body handles background */}
+      {/* No <Head> component here. Metadata is handled by layout.tsx's export const metadata */}
 
       {/* Header section with site title and "Add Review" button */}
       <header className="bg-white bg-opacity-10 backdrop-blur-sm shadow-glass-card p-4 text-center relative rounded-b-xl mb-8"> {/* Applied glass-element principles, rounded bottom */}

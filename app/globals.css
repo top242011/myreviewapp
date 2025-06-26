@@ -21,7 +21,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle white border to define edges */
   border-radius: 16px; /* Uniformly rounded corners for all glass elements */
   box-shadow: theme('boxShadow.glass-card'); /* Custom soft shadow defined in tailwind.config.js */
-  transition: all 0.3s ease-in-out; /* Smooth transitions for hover/focus states */
+  transition: all 0.3s ease-in-out; /* Smooth transitions for hover/focus */
 }
 
 /* Ensures text within glass elements is readable against the translucent background */
@@ -34,7 +34,7 @@ body {
 .glass-element input, .glass-element textarea {
   background-color: rgba(255, 255, 255, 0.25); /* Slightly darker translucency for inputs */
   border: 1px solid rgba(255, 255, 255, 0.4);
-  color: theme('colors.text-light'); /* Text color inside input fields */
+  color: theme('colors.text-light'); /* Input text color */
 }
 
 /* Placeholder text styling for input fields */
@@ -89,4 +89,3 @@ body {
 .star-rating {
   font-size: 1.25rem; /* Equivalent to Tailwind's text-xl, adjust as needed */
 }
-
