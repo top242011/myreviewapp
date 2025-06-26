@@ -1,6 +1,5 @@
 'use client';
 
-// Import necessary modules from React, Next.js, and Supabase
 import { supabase } from '@/utils/supabaseClient';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
@@ -42,7 +41,7 @@ export default function AddReviewPage() {
   // Effect hook to debounce course search requests
   useEffect(() => {
     const delayDebounceFn = setTimeout(async () => {
-      if (searchTerm.trim().length > 2) { // Only perform search if more than 2 characters
+      if (searchTerm.trim().length > 2) {
         setLoadingSearch(true);
         const { data, error } = await supabase
           .from('courses')
@@ -154,75 +153,81 @@ export default function AddReviewPage() {
 
   return (
     <div className="min-h-screen">
-      {/* Header section */}
-      <header className="bg-gradient-to-r from-purple-700 to-indigo-800 shadow-xl p-4 flex items-center rounded-b-3xl mb-8">
-        <Link href="/" className="text-pink-300 hover:text-purple-300 text-lg font-semibold mr-4 transition-colors duration-200">
-          &larr; กลับ
-        </Link>
-        <h1 className="text-3xl font-extrabold text-white flex-grow text-center drop-shadow-md">เพิ่มรีวิวรายวิชา</h1>
+      {/* Header section with site title and back button */}
+      <header className="bg-white bg-opacity-10 backdrop-blur-sm shadow-glass-card rounded-b-3xl mb-8 p-4 md:p-6">
+        <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
+          {/* Back button */}
+          <Link href="/" className="text-accent-1 hover:text-primary-light text-lg font-semibold mr-4 transition-colors duration-200 mb-4 md:mb-0">
+            &larr; กลับหน้าหลัก
+          </Link>
+          {/* Site Title / Context */}
+          <h1 className="text-4xl font-extrabold text-white drop-shadow-md flex-grow text-center">เพิ่มรีวิวรายวิชา</h1>
+          {/* Placeholder for future buttons/alignment */}
+          <div className="w-auto md:w-[150px] text-right"></div> {/* Placeholder to align title */}
+        </div>
       </header>
 
       {/* Main content area */}
       <main className="container mx-auto p-6 py-10 max-w-4xl">
-        <div className="bg-white bg-opacity-15 backdrop-blur-md rounded-xl shadow-lg border border-white border-opacity-30 p-8 mb-8">
+        <div className="glass-element p-8 mb-8">
           <h2 className="text-2xl font-bold mb-4 text-white drop-shadow-md">ค้นหาวิชา หรือเพิ่มวิชาใหม่</h2>
 
           {/* Search section (shown if no course is selected and new course form is not visible) */}
           {!selectedCourse && !showNewCourseForm && (
             <div className="mb-6">
-              <label htmlFor="searchCourse" className="block text-gray-100 text-base font-bold mb-2">
+              <label htmlFor="searchCourse" className="block text-text-base text-base font-bold mb-2">
                 ค้นหารายวิชา (ชื่อหรือรหัสวิชา):
               </label>
               <input
                 type="text"
                 id="searchCourse"
-                className="shadow-inner appearance-none bg-white bg-opacity-25 border border-white border-opacity-40 rounded-lg w-full py-3 px-4 text-gray-100 leading-tight focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition-all duration-200"
+                className="glass-element w-full py-3 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-1 transition-all duration-200"
                 placeholder="เช่น Computer Programming, 2110111"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-              {loadingSearch && <p className="text-gray-300 mt-2">กำลังค้นหา...</p>}
+              {loadingSearch && <p className="text-text-muted mt-2">กำลังค้นหา...</p>}
               {/* Display search results */}
               {searchTerm.length > 2 && searchResults.length > 0 && (
-                <div className="mt-4 border border-white border-opacity-30 rounded-lg max-h-60 overflow-y-auto">
+                <div className="mt-4 border border-glass-border rounded-lg max-h-60 overflow-y-auto">
                   {searchResults.map((course) => (
                     <div
                       key={course.id}
-                      className="p-3 cursor-pointer hover:bg-white hover:bg-opacity-10 transition-all duration-200 border-b border-white border-opacity-20 last:border-b-0"
+                      className="p-3 cursor-pointer hover:bg-white hover:bg-opacity-10 transition-all duration-200 border-b border-glass-border last:border-b-0"
                       onClick={() => handleSelectCourse(course)}
                     >
-                      <p className="font-semibold text-pink-300">{course.course_name}</p>
-                      <p className="text-sm text-gray-200">{course.course_code} - {course.university_name}</p>
+                      <p className="font-semibold text-accent-1">{course.course_name}</p>
+                      <p className="text-sm text-text-muted">{course.course_code} • {course.university_name}</p>
                     </div>
                   ))}
                 </div>
               )}
               {/* Message if no results found, with option to add new course */}
               {searchTerm.length > 2 && !loadingSearch && searchResults.length === 0 && (
-                <p className="text-gray-300 mt-2">
+                <p className="text-text-muted mt-2">
                   ไม่พบรายวิชาที่ค้นหา
                   <button
                     type="button"
                     onClick={() => setShowNewCourseForm(true)}
-                    className="ml-2 text-pink-300 hover:underline"
+                    className="ml-2 text-accent-1 hover:underline"
                   >
                     เพิ่มรายวิชาใหม่?
                   </button>
                 </p>
               )}
               {searchTerm.length <= 2 && (
-                <p className="text-gray-300 mt-2">พิมพ์อย่างน้อย 3 ตัวอักษรเพื่อค้นหา</p>
+                <p className="text-text-muted mt-2">พิมพ์อย่างน้อย 3 ตัวอักษรเพื่อค้นหา</p>
               )}
             </div>
           )}
 
           {/* Display selected course details */}
           {selectedCourse && (
-            <div className="mb-6 bg-white bg-opacity-10 border border-white border-opacity-30 p-4 rounded-lg shadow-md">
-              <h3 className="text-xl font-bold text-pink-300">วิชาที่เลือก:</h3>
-              <p className="text-lg text-gray-100">{selectedCourse.course_name} ({selectedCourse.course_code}) - {selectedCourse.university_name}</p>
-              {selectedCourse.faculty && <p className="text-md text-gray-200">คณะ: {selectedCourse.faculty}</p>}
-              {selectedCourse.credits && <p className="text-md text-gray-200">หน่วยกิต: {selectedCourse.credits}</p>}
+            <div className="mb-6 glass-element p-4 rounded-lg shadow-md">
+              <h3 className="text-xl font-bold text-accent-1">วิชาที่เลือก:</h3>
+              <p className="text-lg text-text-base">{selectedCourse.course_name} • {selectedCourse.course_code} • {selectedCourse.university_name}</p>
+              {selectedCourse.faculty && <p className="text-text-muted text-md">คณะ: {selectedCourse.faculty}</p>}
+              {selectedCourse.credits && <p className="text-text-muted text-md">หน่วยกิต: {selectedCourse.credits}</p>}
               <button
                 type="button"
                 onClick={() => { setSelectedCourse(null); setSearchTerm(''); setShowNewCourseForm(false); }}
@@ -235,33 +240,33 @@ export default function AddReviewPage() {
 
           {/* New course details form (shown if explicitly requested and no course is selected) */}
           {(showNewCourseForm && !selectedCourse) && (
-            <div className="mb-6 bg-white bg-opacity-15 backdrop-blur-md rounded-xl shadow-lg border border-white border-opacity-30 p-6 border-dashed">
+            <div className="mb-6 glass-element p-6 border-dashed border-opacity-50">
               <h3 className="text-xl font-bold mb-4 text-white">เพิ่มข้อมูลรายวิชาใหม่:</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="newUniversityName" className="block text-gray-100 text-sm font-bold mb-2">มหาวิทยาลัย: <span className="text-red-400">*</span></label>
+                  <label htmlFor="newUniversityName" className="block text-text-base text-sm font-bold mb-2">มหาวิทยาลัย: <span className="text-red-400">*</span></label>
                   <input type="text" id="newUniversityName" value={newUniversityName} onChange={(e) => setNewUniversityName(e.target.value)} required
-                    className="shadow-inner appearance-none bg-white bg-opacity-25 border border-white border-opacity-40 rounded-lg w-full py-2 px-3 text-gray-100 leading-tight focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent" />
+                    className="glass-element py-2 px-3 w-full rounded-lg focus:ring-accent-1" />
                 </div>
                 <div>
-                  <label htmlFor="newCourseCode" className="block text-gray-100 text-sm font-bold mb-2">รหัสวิชา: <span className="text-red-400">*</span></label>
+                  <label htmlFor="newCourseCode" className="block text-text-base text-sm font-bold mb-2">รหัสวิชา: <span className="text-red-400">*</span></label>
                   <input type="text" id="newCourseCode" value={newCourseCode} onChange={(e) => setNewCourseCode(e.target.value)} required
-                    className="shadow-inner appearance-none bg-white bg-opacity-25 border border-white border-opacity-40 rounded-lg w-full py-2 px-3 text-gray-100 leading-tight focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent" />
+                    className="glass-element py-2 px-3 w-full rounded-lg focus:ring-accent-1" />
                 </div>
                 <div>
-                  <label htmlFor="newCourseName" className="block text-gray-100 text-sm font-bold mb-2">ชื่อวิชา: <span className="text-red-400">*</span></label>
+                  <label htmlFor="newCourseName" className="block text-text-base text-sm font-bold mb-2">ชื่อวิชา: <span className="text-red-400">*</span></label>
                   <input type="text" id="newCourseName" value={newCourseName} onChange={(e) => setNewCourseName(e.target.value)} required
-                    className="shadow-inner appearance-none bg-white bg-opacity-25 border border-white border-opacity-40 rounded-lg w-full py-2 px-3 text-gray-100 leading-tight focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent" />
+                    className="glass-element py-2 px-3 w-full rounded-lg focus:ring-accent-1" />
                 </div>
                 <div>
-                  <label htmlFor="newFaculty" className="block text-gray-100 text-sm font-bold mb-2">คณะ/ภาควิชา (ถ้ามี):</label>
+                  <label htmlFor="newFaculty" className="block text-text-base text-sm font-bold mb-2">คณะ/ภาควิชา (ถ้ามี):</label>
                   <input type="text" id="newFaculty" value={newFaculty} onChange={(e) => setNewFaculty(e.target.value)}
-                    className="shadow-inner appearance-none bg-white bg-opacity-25 border border-white border-opacity-40 rounded-lg w-full py-2 px-3 text-gray-100 leading-tight focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent" />
+                    className="glass-element py-2 px-3 w-full rounded-lg focus:ring-accent-1" />
                 </div>
                 <div>
-                  <label htmlFor="newCredits" className="block text-gray-100 text-sm font-bold mb-2">หน่วยกิต (ตัวเลข):</label>
+                  <label htmlFor="newCredits" className="block text-text-base text-sm font-bold mb-2">หน่วยกิต (ตัวเลข):</label>
                   <input type="number" id="newCredits" value={newCredits} onChange={(e) => setNewCredits(e.target.value)}
-                    className="shadow-inner appearance-none bg-white bg-opacity-25 border border-white border-opacity-40 rounded-lg w-full py-2 px-3 text-gray-100 leading-tight focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent" />
+                    className="glass-element py-2 px-3 w-full rounded-lg focus:ring-accent-1" />
                 </div>
               </div>
               <button
@@ -276,18 +281,18 @@ export default function AddReviewPage() {
 
           {/* Review Form (shown only if a course is selected or new course form is visible) */}
           {(selectedCourse || showNewCourseForm) && (
-            <form onSubmit={handleSubmitReview} className="bg-white bg-opacity-15 backdrop-blur-md rounded-xl shadow-lg border border-white border-opacity-30 p-8">
+            <form onSubmit={handleSubmitReview} className="glass-element p-8">
               <h2 className="text-2xl font-bold mb-4 text-white">เขียนรีวิวของคุณ</h2>
               <div className="mb-6">
-                <label htmlFor="reviewContent" className="block text-gray-100 text-base font-bold mb-2">
+                <label htmlFor="reviewContent" className="block text-text-base text-base font-bold mb-2">
                   เนื้อหารีวิวของคุณ:
-                  <span className="text-sm font-normal text-gray-300 block">
+                  <span className="text-sm font-normal text-text-muted block">
                     (เช่น วิชานี้เหมาะกับใคร, คุณได้อะไรจากวิชานี้, ข้อดี/ข้อเสีย, ประสบการณ์สอบ/โปรเจกต์)
                   </span>
                 </label>
                 <textarea
                   id="reviewContent"
-                  className="shadow-inner appearance-none bg-white bg-opacity-25 border border-white border-opacity-40 rounded-lg w-full py-3 px-4 text-gray-100 leading-tight focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition-all duration-200"
+                  className="glass-element w-full py-3 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-1 transition-all duration-200"
                   rows={6}
                   value={reviewContent}
                   onChange={(e) => setReviewContent(e.target.value)}
@@ -304,7 +309,7 @@ export default function AddReviewPage() {
                   { label: 'ปริมาณการบ้าน', value: ratingHomework, setter: setRatingHomework },
                 ].map((item, index) => (
                   <div key={index} className="flex flex-col">
-                    <label className="block text-gray-100 text-base font-bold mb-2">
+                    <label className="block text-text-base text-base font-bold mb-2">
                       {item.label}: <span className="font-normal text-yellow-400 ml-1 star-rating">{renderStars(item.value)}</span>
                     </label>
                     <input
@@ -313,17 +318,17 @@ export default function AddReviewPage() {
                       max="5"
                       value={item.value}
                       onChange={(e) => item.setter(parseInt(e.target.value))}
-                      className="w-full h-2 bg-blue-400 rounded-lg appearance-none cursor-pointer accent-cyan-400"
+                      className="w-full h-2 bg-primary-dark rounded-lg appearance-none cursor-pointer accent-accent-1"
                     />
                   </div>
                 ))}
               </div>
 
               <div className="mb-6">
-                <label className="flex items-center cursor-pointer text-gray-100">
+                <label className="flex items-center cursor-pointer text-text-base">
                   <input
                     type="checkbox"
-                    className="form-checkbox h-5 w-5 text-purple-400 rounded-md border-gray-400 focus:ring-pink-400 transition-all duration-200"
+                    className="form-checkbox h-5 w-5 text-primary-light rounded-md border-glass-border focus:ring-accent-1 transition-all duration-200"
                     checked={isAnonymous}
                     onChange={(e) => setIsAnonymous(e.target.checked)}
                   />
@@ -344,7 +349,7 @@ export default function AddReviewPage() {
 
               <button
                 type="submit"
-                className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-indigo-600 hover:to-purple-600 text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:shadow-outline w-full text-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="btn-primary-gradient w-full text-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? 'กำลังส่งรีวิว...' : 'ส่งรีวิวของคุณ'}

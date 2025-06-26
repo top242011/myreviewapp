@@ -1,4 +1,4 @@
-'use client'; // Client Component because it uses useState and handleSubmit
+'use client';
 
 import { supabase } from '@/utils/supabaseClient';
 import { useEffect, useState } from 'react';
@@ -26,13 +26,12 @@ interface Review {
 }
 
 export default function CourseDetailPage() {
-  const { id } = useParams(); // Get course ID from URL parameters
+  const { id } = useParams();
   const [course, setCourse] = useState<Course | null>(null);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // State for review form fields
   const [reviewContent, setReviewContent] = useState('');
   const [ratingOverall, setRatingOverall] = useState(3);
   const [ratingDifficulty, setRatingDifficulty] = useState(3);
@@ -43,7 +42,6 @@ export default function CourseDetailPage() {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  // Effect to fetch course and review data when the ID changes
   useEffect(() => {
     if (!id) return;
 
@@ -51,7 +49,6 @@ export default function CourseDetailPage() {
       setLoading(true);
       setError(null);
       try {
-        // Fetch course details
         const { data: courseData, error: courseError } = await supabase
           .from('courses')
           .select('*')
@@ -61,12 +58,11 @@ export default function CourseDetailPage() {
         if (courseError) throw courseError;
         setCourse(courseData);
 
-        // Fetch reviews for the course
         const { data: reviewsData, error: reviewsError } = await supabase
           .from('reviews')
           .select('*')
           .eq('course_id', id)
-          .order('created_at', { ascending: false }); // Order by creation date, newest first
+          .order('created_at', { ascending: false });
 
         if (reviewsError) throw reviewsError;
         setReviews(reviewsData);
@@ -83,9 +79,8 @@ export default function CourseDetailPage() {
     };
 
     fetchCourseAndReviews();
-  }, [id]); // Dependency array: re-run when 'id' changes
+  }, [id]);
 
-  // Function to handle review form submission
   const handleSubmitReview = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -99,7 +94,6 @@ export default function CourseDetailPage() {
     }
 
     try {
-      // Insert new review into the 'reviews' table
       const { error } = await supabase.from('reviews').insert({
         course_id: id as string,
         content: reviewContent,
@@ -113,7 +107,6 @@ export default function CourseDetailPage() {
       if (error) throw error;
 
       setSubmitSuccess(true);
-      // Reset form fields after successful submission
       setReviewContent('');
       setRatingOverall(3);
       setRatingDifficulty(3);
@@ -121,7 +114,6 @@ export default function CourseDetailPage() {
       setRatingHomework(3);
       setIsAnonymous(true);
 
-      // Re-fetch reviews to update the list on the page
       const { data: updatedReviews, error: fetchError } = await supabase
         .from('reviews')
         .select('*')
@@ -142,30 +134,28 @@ export default function CourseDetailPage() {
     }
   };
 
-  // Helper function to render star ratings visually
   const renderStars = (rating: number) => {
     return '⭐'.repeat(rating) + '☆'.repeat(5 - rating);
   };
 
-  // Loading, Error, and Not Found states
   if (loading) return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-main text-text-base">
       <p className="text-xl">กำลังโหลดข้อมูล...</p>
     </div>
   );
   if (error) return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-gray-100">
-      <div className="text-center p-8 bg-white bg-opacity-15 backdrop-blur-md rounded-xl shadow-lg border border-white border-opacity-30">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-main text-text-base">
+      <div className="text-center p-8 glass-element">
         <h1 className="text-xl font-bold text-red-400 mb-4">Error: {error}</h1>
-        <p className="text-gray-200">โปรดลองอีกครั้งในภายหลัง</p>
+        <p className="text-text-muted">โปรดลองอีกครั้งในภายหลัง</p>
       </div>
     </div>
   );
   if (!course) return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-gray-100">
-      <div className="text-center p-8 bg-white bg-opacity-15 backdrop-blur-md rounded-xl shadow-lg border border-white border-opacity-30">
-        <h1 className="text-xl font-bold text-gray-100 mb-4">ไม่พบข้อมูลรายวิชา</h1>
-        <Link href="/" className="text-pink-300 hover:underline">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-main text-text-base">
+      <div className="text-center p-8 glass-element">
+        <h1 className="text-xl font-bold text-text-base mb-4">ไม่พบข้อมูลรายวิชา</h1>
+        <Link href="/" className="text-accent-1 hover:underline">
           กลับสู่หน้าหลัก
         </Link>
       </div>
@@ -174,36 +164,46 @@ export default function CourseDetailPage() {
 
   return (
     <div className="min-h-screen">
-      {/* Header section */}
-      <header className="bg-gradient-to-r from-purple-700 to-indigo-800 shadow-xl p-4 flex items-center rounded-b-3xl mb-8">
-        <Link href="/" className="text-pink-300 hover:text-purple-300 text-lg font-semibold mr-4 transition-colors duration-200">
-          &larr; กลับ
-        </Link>
-        <h1 className="text-3xl font-extrabold text-white flex-grow text-center drop-shadow-md">รายละเอียดวิชาและการรีวิว</h1>
+      {/* Header section with site title and back button */}
+      <header className="bg-white bg-opacity-10 backdrop-blur-sm shadow-glass-card rounded-b-3xl mb-8 p-4 md:p-6">
+        <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
+          {/* Back button */}
+          <Link href="/" className="text-accent-1 hover:text-primary-light text-lg font-semibold mr-4 transition-colors duration-200 mb-4 md:mb-0">
+            &larr; กลับหน้าหลัก
+          </Link>
+          {/* Site Title / Course Context (centered for this page) */}
+          <h1 className="text-4xl font-extrabold text-white drop-shadow-md flex-grow text-center">รายละเอียดวิชา</h1>
+          {/* Placeholder for future buttons, e.g., Bookmark */}
+          <div className="w-auto md:w-[150px] text-right"> {/* Placeholder to align title */}
+            <button className="glass-element px-3 py-2 rounded-lg text-text-base text-sm hover:bg-white hover:bg-opacity-20 transition-colors hidden md:inline-block">
+              Bookmark ❤️
+            </button>
+          </div>
+        </div>
       </header>
 
       <main className="container mx-auto p-6 py-10 max-w-4xl">
         {/* Course details block */}
-        <div className="bg-white bg-opacity-15 backdrop-blur-md rounded-xl shadow-lg border border-white border-opacity-30 p-8 mb-8">
-          <h2 className="text-3xl font-bold mb-2 text-pink-300 drop-shadow-md">{course.course_name}</h2>
-          <p className="text-gray-100 text-xl mb-2">{course.course_code} - {course.university_name}</p>
-          {course.faculty && <p className="text-gray-200 text-lg">คณะ: {course.faculty}</p>}
-          {course.credits && <p className="text-gray-200 text-lg">หน่วยกิต: {course.credits}</p>}
+        <div className="glass-element p-8 mb-8">
+          <h2 className="text-3xl font-bold mb-2 text-accent-1 drop-shadow-md glow-text">{course.course_name}</h2>
+          <p className="text-text-base text-xl mb-2">{course.course_code} • {course.university_name}</p>
+          {course.faculty && <p className="text-text-muted text-lg">คณะ: {course.faculty}</p>}
+          {course.credits && <p className="text-text-muted text-lg">หน่วยกิต: {course.credits}</p>}
         </div>
 
-        <h2 className="text-2xl font-bold mb-6 text-white drop-shadow-md">เขียนรีวิวรายวิชานี้</h2>
+        <h2 className="text-3xl font-bold mb-6 text-white drop-shadow-md glow-text">เขียนรีวิวรายวิชานี้</h2>
         {/* Review submission form */}
-        <form onSubmit={handleSubmitReview} className="bg-white bg-opacity-15 backdrop-blur-md rounded-xl shadow-lg border border-white border-opacity-30 p-8 mb-10">
+        <form onSubmit={handleSubmitReview} className="glass-element p-8 mb-10">
           <div className="mb-6">
-            <label htmlFor="reviewContent" className="block text-gray-100 text-base font-bold mb-2">
+            <label htmlFor="reviewContent" className="block text-text-base text-base font-bold mb-2">
               เนื้อหารีวิวของคุณ:
-              <span className="text-sm font-normal text-gray-300 block">
+              <span className="text-sm font-normal text-text-muted block">
                 (เช่น วิชานี้เหมาะกับใคร, คุณได้อะไรจากวิชานี้, ข้อดี/ข้อเสีย, ประสบการณ์สอบ/โปรเจกต์)
               </span>
             </label>
             <textarea
               id="reviewContent"
-              className="shadow-inner appearance-none bg-white bg-opacity-25 border border-white border-opacity-40 rounded-lg w-full py-3 px-4 text-gray-100 leading-tight focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition-all duration-200"
+              className="glass-element w-full py-3 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-1 transition-all duration-200"
               rows={6}
               value={reviewContent}
               onChange={(e) => setReviewContent(e.target.value)}
@@ -220,7 +220,7 @@ export default function CourseDetailPage() {
               { label: 'ปริมาณการบ้าน', value: ratingHomework, setter: setRatingHomework },
             ].map((item, index) => (
               <div key={index} className="flex flex-col">
-                <label className="block text-gray-100 text-base font-bold mb-2">
+                <label className="block text-text-base text-base font-bold mb-2">
                   {item.label}: <span className="font-normal text-yellow-400 ml-1 star-rating">{renderStars(item.value)}</span>
                 </label>
                 <input
@@ -229,17 +229,17 @@ export default function CourseDetailPage() {
                   max="5"
                   value={item.value}
                   onChange={(e) => item.setter(parseInt(e.target.value))}
-                  className="w-full h-2 bg-blue-400 rounded-lg appearance-none cursor-pointer accent-cyan-400"
+                  className="w-full h-2 bg-primary-dark rounded-lg appearance-none cursor-pointer accent-accent-1"
                 />
               </div>
             ))}
           </div>
 
           <div className="mb-6">
-            <label className="flex items-center cursor-pointer text-gray-100">
+            <label className="flex items-center cursor-pointer text-text-base">
               <input
                 type="checkbox"
-                className="form-checkbox h-5 w-5 text-purple-400 rounded-md border-gray-400 focus:ring-pink-400 transition-all duration-200"
+                className="form-checkbox h-5 w-5 text-primary-light rounded-md border-glass-border focus:ring-accent-1 transition-all duration-200"
                 checked={isAnonymous}
                 onChange={(e) => setIsAnonymous(e.target.checked)}
               />
@@ -260,21 +260,21 @@ export default function CourseDetailPage() {
 
           <button
             type="submit"
-            className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-indigo-600 hover:to-purple-600 text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:shadow-outline w-full text-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="btn-primary-gradient w-full text-lg disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={isSubmitting}
           >
             {isSubmitting ? 'กำลังส่งรีวิว...' : 'ส่งรีวิวของคุณ'}
           </button>
         </form>
 
-        <h2 className="text-2xl font-bold mb-6 text-white drop-shadow-md">รีวิวทั้งหมดสำหรับวิชานี้</h2>
+        <h2 className="text-3xl font-bold mb-6 text-white drop-shadow-md glow-text">รีวิวทั้งหมดสำหรับวิชานี้</h2>
         {reviews.length === 0 ? (
-          <p className="text-gray-300 text-lg text-center mt-8 drop-shadow-sm">ยังไม่มีรีวิวสำหรับวิชานี้ เป็นคนแรกที่รีวิวเลย!</p>
+          <p className="text-text-muted text-lg text-center mt-8 drop-shadow-sm">ยังไม่มีรีวิวสำหรับวิชานี้ เป็นคนแรกที่รีวิวเลย!</p>
         ) : (
           <div className="space-y-6">
             {reviews.map((review) => (
-              <div key={review.id} className="bg-white bg-opacity-15 backdrop-blur-md rounded-xl shadow-lg border border-white border-opacity-30 p-7">
-                <p className="text-sm text-gray-200 mb-3">
+              <div key={review.id} className="glass-element p-7">
+                <p className="text-sm text-text-muted mb-3">
                   {review.is_anonymous ? 'ไม่เปิดเผยชื่อ' : 'ผู้ใช้งาน'} •{' '}
                   {new Date(review.created_at).toLocaleDateString('th-TH', {
                     day: 'numeric',
@@ -284,8 +284,8 @@ export default function CourseDetailPage() {
                     minute: '2-digit'
                   })}
                 </p>
-                <p className="text-gray-100 text-base leading-relaxed mb-4">{review.content}</p>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm text-gray-200 font-medium">
+                <p className="text-text-base text-base leading-relaxed mb-4">{review.content}</p>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm text-text-muted font-medium">
                   <p>ภาพรวม: <span className="star-rating">{renderStars(review.rating_overall)}</span></p>
                   <p>ความยาก: <span className="star-rating">{renderStars(review.rating_difficulty)}</span></p>
                   <p>การสอน: <span className="star-rating">{renderStars(review.rating_teaching)}</span></p>

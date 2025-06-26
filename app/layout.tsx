@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: {
     default: "เว็บรีวิวรายวิชา - แหล่งรวมรีวิวคอร์สเรียนสำหรับนักศึกษา",
-    template: "%s | เว็บรีวิวรายวิชา", // This will append " | เว็บรีวิวรายวิชา" to page-specific titles
+    template: "%s | เว็บรีวิวรายวิชา",
   },
   description: "แพลตฟอร์มรีวิวรายวิชาสำหรับนักศึกษาไทย ค้นหา อ่าน และเขียนรีวิววิชาและอาจารย์เพื่อการตัดสินใจลงทะเบียน",
 };
@@ -26,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="th"> {/* Changed language to Thai */}
+    <html lang="th">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
       </body>

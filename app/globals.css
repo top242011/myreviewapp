@@ -3,91 +3,95 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom Background for the entire body using HARDCODED Hex colors */
+/* Custom Liquid Glass Background for the entire body */
 body {
-  /* Using HARDCODED Hex colors for the radial gradient */
-  background: radial-gradient(circle at 10% 20%, #8B5CF6 0%, #4F46E5 100%); /* purple-500, indigo-600 */
+  background: radial-gradient(circle at 10% 20%, theme('colors.primary-light') 0%, theme('colors.primary-dark') 100%);
   background-attachment: fixed;
   min-height: 100vh;
-  color: #F3F4F6; /* gray-100 */
+  color: theme('colors.text-base'); /* Default text color, provides contrast on dark background */
   overflow-x: hidden;
-  font-family: 'Inter', sans-serif; /* Using Inter font, or default system sans-serif */
+  /* Use font-geist-sans from layout.tsx */
+  font-family: var(--font-geist-sans);
 }
 
-/* Base styles for all UI elements that should have a "glass-like" effect */
+/* Base styles for all UI elements that should have the "glass" effect */
 .glass-element {
-  background-color: rgba(255, 255, 255, 0.15); /* Slightly opaque white for translucency */
-  backdrop-filter: blur(10px); /* Lighter blur effect */
-  -webkit-backdrop-filter: blur(10px); /* For Safari browser compatibility */
-  border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle white border */
-  border-radius: 1rem; /* rounded-xl */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  transition: all 0.3s ease-in-out;
+  background-color: theme('colors.glass-bg'); /* Translucent background */
+  backdrop-filter: blur(15px); /* Stronger blur for distinct glass look */
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid theme('colors.glass-border'); /* Subtle border */
+  border-radius: 1rem; /* Uniformly rounded corners (rounded-xl) */
+  box-shadow: theme('boxShadow.glass-card'); /* Custom soft shadow */
+  transition: all 0.3s ease-in-out; /* Smooth transitions */
 }
 
-/* Text colors within glass elements - explicitly set to light gray */
+/* Text colors within glass elements (to ensure readability on translucent backgrounds) */
 .glass-element h1, .glass-element h2, .glass-element h3, .glass-element p, .glass-element label,
-.glass-element .text-gray-700, .glass-element .text-gray-600, .glass-element .text-gray-500 {
-  color: #F3F4F6; /* gray-100 */
+.glass-element div.text-gray-200, .glass-element div.text-gray-300 {
+  color: theme('colors.text-base'); /* Ensures base text within glass elements is light */
 }
 
-/* Styling for input fields and text areas within glass elements */
+/* Input fields and text areas styling within glass elements */
 .glass-element input, .glass-element textarea {
-  background-color: rgba(255, 255, 255, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  color: #F3F4F6; /* gray-100 */
+  background-color: theme('colors.glass-input-bg'); /* Slightly less transparent */
+  border: 1px solid theme('colors.glass-border');
+  color: theme('colors.text-base'); /* Input text color */
+  border-radius: 0.5rem; /* rounded-lg */
 }
 
-/* Placeholder text styling for input fields */
+/* Placeholder text styling */
 .glass-element input::placeholder, .glass-element textarea::placeholder {
-  color: #9CA3AF; /* gray-400 */
+  color: theme('colors.text-muted');
 }
 
 /* Focus state for input fields */
 .glass-element input:focus, .glass-element textarea:focus {
   outline: none;
-  border-color: #22D3EE; /* cyan-400 */
-  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.5); /* Soft glowing effect */
+  border-color: theme('colors.accent-1'); /* Accent color for focus border */
+  box-shadow: 0 0 0 3px rgba(244, 114, 182, 0.5); /* Soft glowing focus effect using accent-1 */
 }
 
-/* Custom button styling with standard Tailwind gradients */
-.btn-gradient {
-  background-image: linear-gradient(to right, #8B5CF6, #4F46E5); /* purple-500, indigo-600 */
+/* Primary Gradient Button Style */
+.btn-primary-gradient {
+  background-image: linear-gradient(to right, theme('colors.primary-light'), theme('colors.primary-dark'));
   color: white;
-  border-radius: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  font-weight: 700;
+  border-radius: 0.75rem; /* rounded-xl */
+  padding: 0.75rem 1.5rem; /* py-3 px-6 */
+  font-weight: 700; /* font-bold */
   transition: all 0.3s ease-in-out;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Hover effect for gradient buttons */
-.btn-gradient:hover {
-  background-image: linear-gradient(to right, #4F46E5, #8B5CF6); /* indigo-600, purple-500 */
+.btn-primary-gradient:hover {
+  background-image: linear-gradient(to right, theme('colors.primary-dark'), theme('colors.primary-light'));
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
   transform: translateY(-2px);
 }
 
-/* Accent button style (for "+ เพิ่มรีวิว" button) */
-.btn-accent {
-  background-image: linear-gradient(to right, #EC4899, #F87171); /* pink-500, red-400 */
+/* Accent Gradient Button Style (for "+ เพิ่มรีวิว" button) */
+.btn-accent-gradient {
+  background-image: linear-gradient(to right, theme('colors.accent-1'), theme('colors.accent-2'));
   color: white;
-  border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
+  border-radius: 0.75rem; /* rounded-xl */
+  padding: 0.5rem 1rem; /* py-2 px-4 */
   font-weight: 700;
   transition: all 0.3s ease-in-out;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Hover effect for accent buttons */
-.btn-accent:hover {
-  background-image: linear-gradient(to left, #EC4899, #F87171); /* pink-500, red-400 */
+.btn-accent-gradient:hover {
+  background-image: linear-gradient(to left, theme('colors.accent-1'), theme('colors.accent-2'));
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
   transform: translateY(-2px);
 }
 
 /* Star Rating Visuals */
 .star-rating {
-  font-size: 1.25rem;
-  color: #FACC15; /* yellow-400 */
+  font-size: 1.25rem; /* text-xl */
+  color: theme('colors.yellow.400'); /* Standard yellow for stars */
+}
+
+/* Custom class for glowing text effect */
+.glow-text {
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.6), 0 0 12px rgba(255, 255, 255, 0.4);
 }
