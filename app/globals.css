@@ -3,19 +3,18 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom Background for the entire body using standard Tailwind colors */
+/* Custom Background for the entire body using HARDCODED Hex colors */
 body {
-  /* Using standard Tailwind colors for the radial gradient */
-  background: radial-gradient(circle at 10% 20%, theme('colors.purple.700') 0%, theme('colors.indigo.800') 100%);
+  /* Using HARDCODED Hex colors for the radial gradient */
+  background: radial-gradient(circle at 10% 20%, #8B5CF6 0%, #4F46E5 100%); /* purple-500, indigo-600 */
   background-attachment: fixed;
   min-height: 100vh;
-  color: theme('colors.gray.100'); /* Light gray text for contrast */
+  color: #F3F4F6; /* gray-100 */
   overflow-x: hidden;
   font-family: 'Inter', sans-serif; /* Using Inter font, or default system sans-serif */
 }
 
 /* Base styles for all UI elements that should have a "glass-like" effect */
-/* We define these explicitly here as we removed custom theme colors from tailwind.config.js */
 .glass-element {
   background-color: rgba(255, 255, 255, 0.15); /* Slightly opaque white for translucency */
   backdrop-filter: blur(10px); /* Lighter blur effect */
@@ -29,31 +28,31 @@ body {
 /* Text colors within glass elements - explicitly set to light gray */
 .glass-element h1, .glass-element h2, .glass-element h3, .glass-element p, .glass-element label,
 .glass-element .text-gray-700, .glass-element .text-gray-600, .glass-element .text-gray-500 {
-  color: theme('colors.gray.100'); /* Ensures text is visible */
+  color: #F3F4F6; /* gray-100 */
 }
 
 /* Styling for input fields and text areas within glass elements */
 .glass-element input, .glass-element textarea {
   background-color: rgba(255, 255, 255, 0.25);
   border: 1px solid rgba(255, 255, 255, 0.4);
-  color: theme('colors.gray.100');
+  color: #F3F4F6; /* gray-100 */
 }
 
 /* Placeholder text styling for input fields */
 .glass-element input::placeholder, .glass-element textarea::placeholder {
-  color: theme('colors.gray.400');
+  color: #9CA3AF; /* gray-400 */
 }
 
 /* Focus state for input fields */
 .glass-element input:focus, .glass-element textarea:focus {
   outline: none;
-  border-color: theme('colors.cyan.400'); /* Accent color for focus */
-  box-shadow: 0 0 0 3px rgba(50, 200, 250, 0.5); /* Soft glowing effect */
+  border-color: #22D3EE; /* cyan-400 */
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.5); /* Soft glowing effect */
 }
 
 /* Custom button styling with standard Tailwind gradients */
 .btn-gradient {
-  background-image: linear-gradient(to right, theme('colors.purple.600'), theme('colors.indigo.600'));
+  background-image: linear-gradient(to right, #8B5CF6, #4F46E5); /* purple-500, indigo-600 */
   color: white;
   border-radius: 0.5rem;
   padding: 0.75rem 1.5rem;
@@ -64,14 +63,14 @@ body {
 
 /* Hover effect for gradient buttons */
 .btn-gradient:hover {
-  background-image: linear-gradient(to right, theme('colors.indigo.600'), theme('colors.purple.600'));
+  background-image: linear-gradient(to right, #4F46E5, #8B5CF6); /* indigo-600, purple-500 */
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
   transform: translateY(-2px);
 }
 
 /* Accent button style (for "+ เพิ่มรีวิว" button) */
 .btn-accent {
-  background-image: linear-gradient(to right, theme('colors.pink.500'), theme('colors.red.400'));
+  background-image: linear-gradient(to right, #EC4899, #F87171); /* pink-500, red-400 */
   color: white;
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
@@ -82,7 +81,7 @@ body {
 
 /* Hover effect for accent buttons */
 .btn-accent:hover {
-  background-image: linear-gradient(to left, theme('colors.pink.500'), theme('colors.red.400'));
+  background-image: linear-gradient(to left, #EC4899, #F87171); /* pink-500, red-400 */
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
   transform: translateY(-2px);
 }
@@ -90,5 +89,5 @@ body {
 /* Star Rating Visuals */
 .star-rating {
   font-size: 1.25rem;
-  color: theme('colors.yellow.400'); /* Yellow stars */
+  color: #FACC15; /* yellow-400 */
 }
