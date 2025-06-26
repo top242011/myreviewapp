@@ -3,89 +3,92 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom Liquid Glass Background for the entire body */
+/* Custom Background for the entire body using standard Tailwind colors */
 body {
-  /* Using a radial gradient for a dynamic, flowing "liquid" feel */
-  background: radial-gradient(circle at 10% 20%, theme('colors.glass-primary-light') 0%, theme('colors.glass-primary-dark') 100%);
-  background-attachment: fixed; /* Ensures the gradient covers the entire viewport, even on scroll */
-  min-height: 100vh; /* Ensures the background covers the full height of the viewport */
-  color: theme('colors.text-light'); /* Default text color for the body, provides contrast on dark background */
-  overflow-x: hidden; /* Prevents horizontal scrollbar if elements slightly overflow */
+  /* Using standard Tailwind colors for the radial gradient */
+  background: radial-gradient(circle at 10% 20%, theme('colors.purple.700') 0%, theme('colors.indigo.800') 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  color: theme('colors.gray.100'); /* Light gray text for contrast */
+  overflow-x: hidden;
+  font-family: 'Inter', sans-serif; /* Using Inter font, or default system sans-serif */
 }
 
-/* Base styles for all UI elements that should have the "glass" effect */
+/* Base styles for all UI elements that should have a "glass-like" effect */
+/* We define these explicitly here as we removed custom theme colors from tailwind.config.js */
 .glass-element {
   background-color: rgba(255, 255, 255, 0.15); /* Slightly opaque white for translucency */
-  backdrop-filter: blur(15px); /* Stronger blur effect for a distinct glass look */
-  -webkit-backdrop-filter: blur(15px); /* For Safari browser compatibility */
-  border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle white border to define edges */
-  border-radius: 16px; /* Uniformly rounded corners for all glass elements */
-  box-shadow: theme('boxShadow.glass-card'); /* Custom soft shadow defined in tailwind.config.js */
-  transition: all 0.3s ease-in-out; /* Smooth transitions for hover/focus */
+  backdrop-filter: blur(10px); /* Lighter blur effect */
+  -webkit-backdrop-filter: blur(10px); /* For Safari browser compatibility */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle white border */
+  border-radius: 1rem; /* rounded-xl */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: all 0.3s ease-in-out;
 }
 
-/* Ensures text within glass elements is readable against the translucent background */
+/* Text colors within glass elements - explicitly set to light gray */
 .glass-element h1, .glass-element h2, .glass-element h3, .glass-element p, .glass-element label,
 .glass-element .text-gray-700, .glass-element .text-gray-600, .glass-element .text-gray-500 {
-  color: theme('colors.text-light'); /* Uses the custom light text color */
+  color: theme('colors.gray.100'); /* Ensures text is visible */
 }
 
 /* Styling for input fields and text areas within glass elements */
 .glass-element input, .glass-element textarea {
-  background-color: rgba(255, 255, 255, 0.25); /* Slightly darker translucency for inputs */
+  background-color: rgba(255, 255, 255, 0.25);
   border: 1px solid rgba(255, 255, 255, 0.4);
-  color: theme('colors.text-light'); /* Input text color */
+  color: theme('colors.gray.100');
 }
 
 /* Placeholder text styling for input fields */
 .glass-element input::placeholder, .glass-element textarea::placeholder {
-  color: theme('colors.gray.300'); /* Lighter placeholder text for better visibility */
+  color: theme('colors.gray.400');
 }
 
 /* Focus state for input fields */
 .glass-element input:focus, .glass-element textarea:focus {
-  outline: none; /* Removes default outline */
-  border-color: theme('colors.glass-accent-light'); /* Accent color for focus border */
-  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.5); /* Soft glowing focus effect */
+  outline: none;
+  border-color: theme('colors.cyan.400'); /* Accent color for focus */
+  box-shadow: 0 0 0 3px rgba(50, 200, 250, 0.5); /* Soft glowing effect */
 }
 
-/* Custom button styling with gradient background */
+/* Custom button styling with standard Tailwind gradients */
 .btn-gradient {
-  background-image: linear-gradient(to right, theme('colors.glass-primary-light'), theme('colors.glass-primary-dark'));
+  background-image: linear-gradient(to right, theme('colors.purple.600'), theme('colors.indigo.600'));
   color: white;
-  border-radius: 0.5rem; /* rounded-lg */
-  padding: 0.75rem 1.5rem; /* py-3 px-6 */
-  font-weight: 700; /* font-bold */
-  transition: all 0.3s ease-in-out; /* Smooth hover transition */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for buttons */
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 700;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Hover effect for gradient buttons */
 .btn-gradient:hover {
-  background-image: linear-gradient(to right, theme('colors.glass-primary-dark'), theme('colors.glass-primary-light')); /* Reverse gradient on hover */
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Slightly larger shadow on hover */
-  transform: translateY(-2px); /* Slight lift effect on hover */
+  background-image: linear-gradient(to right, theme('colors.indigo.600'), theme('colors.purple.600'));
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
 }
 
 /* Accent button style (for "+ เพิ่มรีวิว" button) */
 .btn-accent {
-  background-image: linear-gradient(to right, theme('colors.glass-accent-light'), theme('colors.glass-accent-dark'));
+  background-image: linear-gradient(to right, theme('colors.pink.500'), theme('colors.red.400'));
   color: white;
-  border-radius: 0.5rem; /* rounded-lg */
-  padding: 0.5rem 1rem; /* py-2 px-4 */
-  font-weight: 700; /* font-bold */
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-weight: 700;
   transition: all 0.3s ease-in-out;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Hover effect for accent buttons */
 .btn-accent:hover {
-  background-image: linear-gradient(to left, theme('colors.glass-accent-light'), theme('colors.glass-accent-dark'));
+  background-image: linear-gradient(to left, theme('colors.pink.500'), theme('colors.red.400'));
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
   transform: translateY(-2px);
 }
 
-/* Star Rating Visuals (adjust font size for better appearance) */
+/* Star Rating Visuals */
 .star-rating {
-  font-size: 1.25rem; /* Equivalent to Tailwind's text-xl, adjust as needed */
+  font-size: 1.25rem;
+  color: theme('colors.yellow.400'); /* Yellow stars */
 }

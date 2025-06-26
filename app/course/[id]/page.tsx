@@ -4,7 +4,6 @@ import { supabase } from '@/utils/supabaseClient';
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-// Removed: import Head from 'next/head'; // This import is no longer needed in App Router pages
 
 interface Course {
   id: string;
@@ -150,23 +149,23 @@ export default function CourseDetailPage() {
 
   // Loading, Error, and Not Found states
   if (loading) return (
-    <div className="min-h-screen flex items-center justify-center">
-      <p className="text-xl text-gray-200">กำลังโหลดข้อมูล...</p>
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-gray-100">
+      <p className="text-xl">กำลังโหลดข้อมูล...</p>
     </div>
   );
   if (error) return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="text-center p-8 glass-element">
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-gray-100">
+      <div className="text-center p-8 bg-white bg-opacity-15 backdrop-blur-md rounded-xl shadow-lg border border-white border-opacity-30">
         <h1 className="text-xl font-bold text-red-400 mb-4">Error: {error}</h1>
         <p className="text-gray-200">โปรดลองอีกครั้งในภายหลัง</p>
       </div>
     </div>
   );
   if (!course) return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="text-center p-8 glass-element">
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-gray-100">
+      <div className="text-center p-8 bg-white bg-opacity-15 backdrop-blur-md rounded-xl shadow-lg border border-white border-opacity-30">
         <h1 className="text-xl font-bold text-gray-100 mb-4">ไม่พบข้อมูลรายวิชา</h1>
-        <Link href="/" className="text-glass-accent-light hover:underline">
+        <Link href="/" className="text-pink-300 hover:underline">
           กลับสู่หน้าหลัก
         </Link>
       </div>
@@ -175,20 +174,18 @@ export default function CourseDetailPage() {
 
   return (
     <div className="min-h-screen">
-      {/* No <Head> component here. Metadata is handled by layout.tsx's export const metadata */}
-
       {/* Header section */}
-      <header className="bg-white bg-opacity-10 backdrop-blur-sm shadow-glass-card p-4 flex items-center rounded-b-xl mb-8">
-        <Link href="/" className="text-glass-accent-light hover:text-glass-primary-light text-lg font-semibold mr-4 transition-colors duration-200">
+      <header className="bg-gradient-to-r from-purple-700 to-indigo-800 shadow-xl p-4 flex items-center rounded-b-3xl mb-8">
+        <Link href="/" className="text-pink-300 hover:text-purple-300 text-lg font-semibold mr-4 transition-colors duration-200">
           &larr; กลับ
         </Link>
-        <h1 className="text-3xl font-extrabold text-white flex-grow text-center drop-shadow-lg">รายละเอียดวิชาและการรีวิว</h1>
+        <h1 className="text-3xl font-extrabold text-white flex-grow text-center drop-shadow-md">รายละเอียดวิชาและการรีวิว</h1>
       </header>
 
       <main className="container mx-auto p-6 py-10 max-w-4xl">
         {/* Course details block */}
-        <div className="glass-element p-8 mb-8">
-          <h2 className="text-3xl font-bold mb-2 text-glass-accent-light drop-shadow-md">{course.course_name}</h2>
+        <div className="bg-white bg-opacity-15 backdrop-blur-md rounded-xl shadow-lg border border-white border-opacity-30 p-8 mb-8">
+          <h2 className="text-3xl font-bold mb-2 text-pink-300 drop-shadow-md">{course.course_name}</h2>
           <p className="text-gray-100 text-xl mb-2">{course.course_code} - {course.university_name}</p>
           {course.faculty && <p className="text-gray-200 text-lg">คณะ: {course.faculty}</p>}
           {course.credits && <p className="text-gray-200 text-lg">หน่วยกิต: {course.credits}</p>}
@@ -196,7 +193,7 @@ export default function CourseDetailPage() {
 
         <h2 className="text-2xl font-bold mb-6 text-white drop-shadow-md">เขียนรีวิวรายวิชานี้</h2>
         {/* Review submission form */}
-        <form onSubmit={handleSubmitReview} className="glass-element p-8 mb-10">
+        <form onSubmit={handleSubmitReview} className="bg-white bg-opacity-15 backdrop-blur-md rounded-xl shadow-lg border border-white border-opacity-30 p-8 mb-10">
           <div className="mb-6">
             <label htmlFor="reviewContent" className="block text-gray-100 text-base font-bold mb-2">
               เนื้อหารีวิวของคุณ:
@@ -206,7 +203,7 @@ export default function CourseDetailPage() {
             </label>
             <textarea
               id="reviewContent"
-              className="shadow-inner appearance-none rounded-lg w-full py-3 px-4 leading-tight focus:outline-none focus:ring-2 transition-all duration-200"
+              className="shadow-inner appearance-none bg-white bg-opacity-25 border border-white border-opacity-40 rounded-lg w-full py-3 px-4 text-gray-100 leading-tight focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition-all duration-200"
               rows={6}
               value={reviewContent}
               onChange={(e) => setReviewContent(e.target.value)}
@@ -224,7 +221,7 @@ export default function CourseDetailPage() {
             ].map((item, index) => (
               <div key={index} className="flex flex-col">
                 <label className="block text-gray-100 text-base font-bold mb-2">
-                  {item.label}: <span className="font-normal text-glass-accent-light ml-1 star-rating">{renderStars(item.value)}</span>
+                  {item.label}: <span className="font-normal text-yellow-400 ml-1 star-rating">{renderStars(item.value)}</span>
                 </label>
                 <input
                   type="range"
@@ -232,7 +229,7 @@ export default function CourseDetailPage() {
                   max="5"
                   value={item.value}
                   onChange={(e) => item.setter(parseInt(e.target.value))}
-                  className="w-full h-2 bg-blue-400 rounded-lg appearance-none cursor-pointer accent-glass-accent-light"
+                  className="w-full h-2 bg-blue-400 rounded-lg appearance-none cursor-pointer accent-cyan-400"
                 />
               </div>
             ))}
@@ -242,7 +239,7 @@ export default function CourseDetailPage() {
             <label className="flex items-center cursor-pointer text-gray-100">
               <input
                 type="checkbox"
-                className="form-checkbox h-5 w-5 text-glass-primary-light rounded-md border-gray-400 focus:ring-glass-accent-light transition-all duration-200"
+                className="form-checkbox h-5 w-5 text-purple-400 rounded-md border-gray-400 focus:ring-pink-400 transition-all duration-200"
                 checked={isAnonymous}
                 onChange={(e) => setIsAnonymous(e.target.checked)}
               />
@@ -263,7 +260,7 @@ export default function CourseDetailPage() {
 
           <button
             type="submit"
-            className="btn-gradient w-full text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-indigo-600 hover:to-purple-600 text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:shadow-outline w-full text-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={isSubmitting}
           >
             {isSubmitting ? 'กำลังส่งรีวิว...' : 'ส่งรีวิวของคุณ'}
@@ -276,7 +273,7 @@ export default function CourseDetailPage() {
         ) : (
           <div className="space-y-6">
             {reviews.map((review) => (
-              <div key={review.id} className="glass-element p-7">
+              <div key={review.id} className="bg-white bg-opacity-15 backdrop-blur-md rounded-xl shadow-lg border border-white border-opacity-30 p-7">
                 <p className="text-sm text-gray-200 mb-3">
                   {review.is_anonymous ? 'ไม่เปิดเผยชื่อ' : 'ผู้ใช้งาน'} •{' '}
                   {new Date(review.created_at).toLocaleDateString('th-TH', {

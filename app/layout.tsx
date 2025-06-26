@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google"; // Assumes these are your chosen fonts
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,17 +12,13 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// --- Start: Updated Metadata for global site information ---
 export const metadata: Metadata = {
   title: {
-    default: "เว็บรีวิวรายวิชา - แหล่งรวมรีวิวคอร์สเรียน", // Default title for all pages
-    template: "%s | เว็บรีวิวรายวิชา", // Template for page-specific titles
+    default: "เว็บรีวิวรายวิชา - แหล่งรวมรีวิวคอร์สเรียนสำหรับนักศึกษา",
+    template: "%s | เว็บรีวิวรายวิชา", // This will append " | เว็บรีวิวรายวิชา" to page-specific titles
   },
-  description: "แพลตฟอร์มรีวิวรายวิชาสำหรับนักศึกษาไทย ค้นหา อ่าน และเขียนรีวิววิชาและอาจารย์",
-  // You can add more metadata here like keywords, openGraph etc.
+  description: "แพลตฟอร์มรีวิวรายวิชาสำหรับนักศึกษาไทย ค้นหา อ่าน และเขียนรีวิววิชาและอาจารย์เพื่อการตัดสินใจลงทะเบียน",
 };
-// --- End: Updated Metadata ---
-
 
 export default function RootLayout({
   children,
@@ -30,10 +26,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="th">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html lang="th"> {/* Changed language to Thai */}
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
       </body>
     </html>
