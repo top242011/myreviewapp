@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google"; // Assumes these are your chosen fonts
 import "./globals.css";
 
 const geistSans = Geist({
@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: {
     default: "เว็บรีวิวรายวิชา - แหล่งรวมรีวิวคอร์สเรียนสำหรับนักศึกษา",
-    template: "%s | เว็บรีวิวรายวิชา",
+    template: "%s | LearnRadar", // Changed template suffix
   },
   description: "แพลตฟอร์มรีวิวรายวิชาสำหรับนักศึกษาไทย ค้นหา อ่าน และเขียนรีวิววิชาและอาจารย์เพื่อการตัดสินใจลงทะเบียน",
 };
@@ -26,12 +26,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="th">
-      {/* Applying background and text color directly as Tailwind utility classes on body. */}
-      {/* This ensures the background and default text are handled by Tailwind's core processing. */}
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased
-        bg-gradient-to-br from-purple-700 to-indigo-800 bg-fixed min-h-screen text-gray-100 overflow-x-hidden
-        font-sans`} /* Added font-sans for the default font */>
+    <html lang="th"> {/* Changed language to Thai */}
+      {/* Body class uses Geist font variables and antialiased text. Background and default text color are handled by globals.css. */}
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
       </body>
     </html>

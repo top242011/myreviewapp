@@ -1,10 +1,8 @@
 'use client';
 
-// Import necessary modules from React, Next.js, and Supabase
 import { supabase } from '@/utils/supabaseClient';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-// Removed: import Head from 'next/head'; // This import is no longer needed in App Router pages
 
 interface Course {
   id: string;
@@ -156,23 +154,23 @@ export default function AddReviewPage() {
   return (
     <div className="min-h-screen">
       {/* Header section with site title and back button */}
-      <header className="bg-white bg-opacity-10 backdrop-blur-sm shadow-glass-card rounded-b-3xl mb-8 p-4 md:p-6">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white bg-opacity-10 backdrop-blur-md shadow-glass-sm rounded-b-3xl px-4 py-3 md:px-6 md:py-4">
         <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
           {/* Back button */}
           <Link href="/" className="text-accent-1 hover:text-primary-light text-lg font-semibold mr-4 transition-colors duration-200 mb-4 md:mb-0">
             &larr; กลับหน้าหลัก
           </Link>
           {/* Site Title / Context */}
-          <h1 className="text-4xl font-extrabold text-white drop-shadow-md flex-grow text-center">เพิ่มรีวิวรายวิชา</h1>
+          <h1 className="text-4xl font-extrabold text-white text-shadow-glow flex-grow text-center">เพิ่มรีวิวรายวิชา</h1>
           {/* Placeholder for future buttons/alignment */}
           <div className="w-auto md:w-[150px] text-right"></div> {/* Placeholder to align title */}
         </div>
       </header>
 
       {/* Main content area */}
-      <main className="container mx-auto p-6 py-10 max-w-4xl">
+      <main className="container mx-auto p-6 py-10 mt-24 max-w-4xl"> {/* Adjusted padding-top for fixed header */}
         <div className="glass-element p-8 mb-8">
-          <h2 className="text-2xl font-bold mb-4 text-white drop-shadow-md">ค้นหาวิชา หรือเพิ่มวิชาใหม่</h2>
+          <h2 className="text-2xl font-bold mb-4 text-white text-shadow-glow">ค้นหาวิชา หรือเพิ่มวิชาใหม่</h2>
 
           {/* Search section (shown if no course is selected and new course form is not visible) */}
           {!selectedCourse && !showNewCourseForm && (
@@ -191,11 +189,11 @@ export default function AddReviewPage() {
               {loadingSearch && <p className="text-text-muted mt-2">กำลังค้นหา...</p>}
               {/* Display search results */}
               {searchTerm.length > 2 && searchResults.length > 0 && (
-                <div className="mt-4 border border-glass-border rounded-lg max-h-60 overflow-y-auto">
+                <div className="mt-4 border border-glass-border-light rounded-lg max-h-60 overflow-y-auto">
                   {searchResults.map((course) => (
                     <div
                       key={course.id}
-                      className="p-3 cursor-pointer hover:bg-white hover:bg-opacity-10 transition-all duration-200 border-b border-glass-border last:border-b-0"
+                      className="p-3 cursor-pointer hover:bg-white hover:bg-opacity-10 transition-all duration-200 border-b border-glass-border-light last:border-b-0"
                       onClick={() => handleSelectCourse(course)}
                     >
                       <p className="font-semibold text-accent-1">{course.course_name}</p>
@@ -242,7 +240,7 @@ export default function AddReviewPage() {
 
           {/* New course details form (shown if explicitly requested and no course is selected) */}
           {(showNewCourseForm && !selectedCourse) && (
-            <div className="mb-6 glass-element p-6 border-dashed border-opacity-50">
+            <div className="mb-6 glass-element p-6 border-dashed border-glass-border-light border-opacity-50">
               <h3 className="text-xl font-bold mb-4 text-white">เพิ่มข้อมูลรายวิชาใหม่:</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -330,7 +328,7 @@ export default function AddReviewPage() {
                 <label className="flex items-center cursor-pointer text-text-base">
                   <input
                     type="checkbox"
-                    className="form-checkbox h-5 w-5 text-primary-light rounded-md border-glass-border focus:ring-accent-1 transition-all duration-200"
+                    className="form-checkbox h-5 w-5 text-primary-light rounded-md border-glass-border-light focus:ring-accent-1 transition-all duration-200"
                     checked={isAnonymous}
                     onChange={(e) => setIsAnonymous(e.target.checked)}
                   />
@@ -360,6 +358,13 @@ export default function AddReviewPage() {
           )}
         </div>
       </main>
+
+      {/* Floating Add Button (already present on main layout.tsx, ensuring it's only once) */}
+      {/* This link should ideally be in Layout or a common component, not duplicated on each page */}
+      {/* For now, keeping it here for demonstration until common components are refactored */}
+      <Link href="/add-review" className="fixed bottom-6 right-6 w-16 h-16 btn-accent-gradient rounded-full flex items-center justify-center text-3xl shadow-glass-lg hover:scale-110 transition-transform duration-300 z-40" title="เขียนรีวิวใหม่">
+        ✏️
+      </Link>
     </div>
   );
 }

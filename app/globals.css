@@ -3,5 +3,98 @@
 @tailwind components;
 @tailwind utilities;
 
-/* No custom CSS here. All global styles are handled via Tailwind classes in components/layout. */
-/* This ensures maximum compatibility and avoids PostCSS theme() resolution issues. */
+/* Custom Global Styles for Liquid Glass Theme */
+
+/* Body background with gradient and fixed attachment */
+body {
+  background: theme('backgroundImage.gradient-bg');
+  background-attachment: fixed;
+  min-height: 100vh;
+  color: theme('colors.text-light'); /* Default text color for the body */
+  overflow-x: hidden;
+  /* Font controlled by layout.tsx Geist fonts */
+  font-family: var(--font-geist-sans);
+}
+
+/* Base Glassmorphism Element Style */
+.glass-element {
+  background-color: theme('colors.glass-overlay'); /* Translucent background */
+  backdrop-filter: blur(15px); /* Strong blur effect */
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid theme('colors.glass-border-light'); /* Subtle light border */
+  border-radius: 1rem; /* rounded-xl */
+  box-shadow: theme('boxShadow.glass-card'); /* Soft depth shadow */
+  transition: all 0.3s ease-in-out; /* Smooth transitions for interactivity */
+}
+
+/* Text colors within glass elements to ensure readability */
+.glass-element h1, .glass-element h2, .glass-element h3, .glass-element p,
+.glass-element label, .glass-element span.text-gray-200, .glass-element span.text-gray-300 {
+  color: theme('colors.text-light');
+}
+
+/* Input fields and text areas within glass elements */
+.glass-element input, .glass-element textarea, .glass-element select {
+  background-color: theme('colors.glass-input-bg'); /* Slightly less transparent */
+  border: 1px solid theme('colors.glass-border-light');
+  color: theme('colors.text-light'); /* Input text color */
+  border-radius: 0.5rem; /* rounded-lg */
+  padding: 0.75rem 1rem; /* py-3 px-4 equivalent */
+}
+
+/* Placeholder text styling */
+.glass-element input::placeholder, .glass-element textarea::placeholder {
+  color: theme('colors.text-muted');
+}
+
+/* Focus state for input fields */
+.glass-element input:focus, .glass-element textarea:focus, .glass-element select:focus {
+  outline: none;
+  border-color: theme('colors.accent-pink'); /* Accent color for focus border */
+  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.5); /* Soft glowing focus effect */
+}
+
+/* Primary Gradient Button Style */
+.btn-primary-gradient {
+  background-image: theme('backgroundImage.gradient-button-primary');
+  color: white;
+  border-radius: 0.75rem; /* rounded-xl */
+  padding: 0.75rem 1.5rem; /* py-3 px-6 */
+  font-weight: 700; /* font-bold */
+  transition: all 0.3s ease-in-out;
+  box-shadow: theme('boxShadow.glass-sm');
+}
+
+.btn-primary-gradient:hover {
+  background-image: linear-gradient(to left, theme('colors.primary-start'), theme('colors.primary-end')); /* Reverse gradient on hover */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Accent Gradient Button Style */
+.btn-accent-gradient {
+  background-image: theme('backgroundImage.gradient-button-accent');
+  color: white;
+  border-radius: 0.75rem; /* rounded-xl */
+  padding: 0.5rem 1rem; /* py-2 px-4 */
+  font-weight: 700;
+  transition: all 0.3s ease-in-out;
+  box-shadow: theme('boxShadow.glass-sm');
+}
+
+.btn-accent-gradient:hover {
+  background-image: linear-gradient(to left, theme('colors.accent-pink'), theme('colors.accent-orange')); /* Reverse gradient on hover */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Star Rating Visuals */
+.star-rating {
+  font-size: 1.25rem; /* text-xl */
+  color: theme('colors.yellow.400'); /* Standard yellow for stars */
+}
+
+/* Custom shadow for glowing text, as defined in tailwind.config.js plugin */
+.text-shadow-glow {
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.6), 0 0 12px rgba(255, 255, 255, 0.4);
+}
