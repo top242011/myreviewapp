@@ -1,8 +1,10 @@
 'use client';
 
+// Import necessary modules from React, Next.js, and Supabase
 import { supabase } from '@/utils/supabaseClient';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+// Removed: import Head from 'next/head'; // This import is no longer needed in App Router pages
 
 interface Course {
   id: string;
